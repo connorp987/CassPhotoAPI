@@ -1,4 +1,3 @@
-const functions = require('firebase-functions');
 const express = require('express')
 const app = express()
 const multer = require('multer')
@@ -96,5 +95,3 @@ app.use(express.static('public'));
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
 })
-
-exports.app = functions.https.onRequest(app);
