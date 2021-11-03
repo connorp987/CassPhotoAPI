@@ -1,1 +1,6 @@
 /node_modules
+package-lock.json
+yarn.lock
+serviceAccount.json
+.env
+/public/*

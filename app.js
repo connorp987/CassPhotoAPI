@@ -9,13 +9,21 @@ var cors = require("cors");
 var admin = require("firebase-admin");
 
 
-
-var serviceAccount = require("./serviceAccount.json");
-
 app.use(cors());
 
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
+  credential: admin.credential.cert({
+    "project_id": process.env.PROJECT_ID,
+    "type": process.env.type,
+    "private_key_id": process.env.private_key_id,
+    "private_key": process.env.private_key?.replace(/\\n/g, '\n'),
+    "client_email": process.env.client_email,
+    "client_id": process.env.client_id,
+    "auth_uri": process.env.auth_uri,
+    "token_uri": process.env.token_uri,
+    "auth_provider_x509_cert_url": process.env.auth_provider_x509_cert_url,
+    "client_x509_cert_url": process.env.client_x509_cert_url
+  }),
   databaseURL: "https://cassphotography-a0c85-default-rtdb.firebaseio.com/"
 });
 
