@@ -1,4 +1,5 @@
 const express = require('express')
+const serverless = require('serverless-http')
 const app = express()
 const multer = require('multer')
 const fs = require('fs');
@@ -67,6 +68,9 @@ app.get('/', (req, res) => {
     }
 
   })
+  .get('/heroTest', (req, res) => {
+    res.json({"wow": "WWWOOWW"})
+  })
 
 
 app
@@ -103,3 +107,6 @@ app.use(express.static('public'));
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
 })
+
+app.use('/.netlify/functions',app)
+module.exports.handler = serverless(app)
