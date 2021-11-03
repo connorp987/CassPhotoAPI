@@ -1,2 +1,2 @@
 # CassPhotoAPI
-sdf
+to start use node -r dotenv/config .
