@@ -5,7 +5,7 @@ const multer = require('multer')
 const fs = require('fs');
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-const port = 4000
+const port = process.env.PORT || 4000
 var cors = require("cors");
 var admin = require("firebase-admin");
 
@@ -69,7 +69,7 @@ app.get('/', (req, res) => {
 
   })
   .get('/heroTest', (req, res) => {
-    res.json({"wow": "WWWOOWW"})
+    res.json({wow: "WWWOOWW"})
   })
 
 
