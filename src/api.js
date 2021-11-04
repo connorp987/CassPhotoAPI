@@ -1,3 +1,4 @@
+'use strict';
 const express = require('express')
 const serverless = require('serverless-http')
 const app = express()
@@ -12,6 +13,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 app.use(cors());
+const router = express.Router();
 
 admin.initializeApp({
   credential: admin.credential.cert({
@@ -42,7 +44,10 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage }).single('file')
 
-app.get('/', (req, res) => {
+
+router.get('/another', (req, res) => res.json({ route: req.originalUrl }));
+
+router.get('/', (req, res) => {
   try {
     const userId = 'jC2nvVk5ndWd8Y8MJHJIQcpdrzS2';
     const additionalClaims = {
@@ -60,7 +65,6 @@ app.get('/', (req, res) => {
   } catch (e) {
     res.end(e)
   }
-
 })
   .get('/test', (req, res) => {
     let files = []
@@ -79,7 +83,7 @@ app.get('/', (req, res) => {
   })
 
 
-app
+router
   .post("/createAdmin", (req, res) => {
     //console.log(req.body.userUID);
     firebase
@@ -109,7 +113,7 @@ app
   });
 
 app.use(express.static('public'));
+app.use('/.netlify/functions/api', router);
 
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`)
-})
+module.exports = app;
+module.exports.handler = serverless(app);
